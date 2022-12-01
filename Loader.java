@@ -16,6 +16,8 @@ public class Loader {
 
     private void init(){
         register("/(index.html)?", SourceLoader::loadIndex);
+        register("/static/.+", SourceLoader::loadStatic);
+
     }
 
     private static String getDate() {
