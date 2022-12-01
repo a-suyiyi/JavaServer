@@ -23,7 +23,7 @@ public class SourceLoader {
                 stream = new FileInputStream(path);
             } catch (FileNotFoundException e) {
                 System.out.printf("%s is not Found!\n", path);
-                return null;
+                return new byte[0];
             }
             int length = stream.available();
             byte[] bytes = new byte[length];
@@ -48,6 +48,13 @@ public class SourceLoader {
         if (!header.getMethod().equals("GET")) return make_response(405);
         HTTPResponse res = make_response(200);
         res.setBody(loadFileContent(getFilePath("/index.html")));
+        return res;
+    }
+
+    public static HTTPResponse loadStatic(HTTPHeader header) {
+        if (!header.getMethod().equals("GET")) return  make_response(405);
+        HTTPResponse res = make_response(200);
+        res.setBody(loadFileContent(getFilePath(header.getPath())));
         return res;
     }
 }
